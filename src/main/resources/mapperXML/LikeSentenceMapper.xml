@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.LikeSentenceMapper" >
+  <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.LikeSentence" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="sentence_id" property="sentenceId" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, sentence_id, gmt_create
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from like_sentence
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from like_sentence
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.nchu.easyword.dao.model.LikeSentence" >
+    insert into like_sentence (id, user_id, sentence_id, 
+      gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{sentenceId,jdbcType=BIGINT}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.LikeSentence" >
+    insert into like_sentence
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="sentenceId != null" >
+        sentence_id,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="sentenceId != null" >
+        #{sentenceId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.LikeSentence" >
+    update like_sentence
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="sentenceId != null" >
+        sentence_id = #{sentenceId,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.LikeSentence" >
+    update like_sentence
+    set user_id = #{userId,jdbcType=BIGINT},
+      sentence_id = #{sentenceId,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!--获取用户指定例句点赞记录-->
+    <select id="getUserRecord" resultMap="BaseResultMap">
+        SELECT * FROM like_sentence
+        WHERE user_id=#{userId} AND sentence_id = #{sentence_id}
+    </select>
+</mapper>

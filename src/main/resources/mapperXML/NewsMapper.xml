@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.NewsMapper">
+    <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.News">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="title_en" property="titleEn" jdbcType="VARCHAR"/>
+        <result column="title_cn" property="titleCn" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="cover_pic" property="coverPic" jdbcType="VARCHAR"/>
+        <result column="word_num" property="wordNum" jdbcType="INTEGER"/>
+        <result column="source" property="source" jdbcType="VARCHAR"/>
+        <result column="voice" property="voice" jdbcType="VARCHAR"/>
+        <result column="views" property="views" jdbcType="BIGINT"/>
+        <result column="point" property="point" jdbcType="INTEGER"/>
+        <result column="experience" property="experience" jdbcType="INTEGER"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.nchu.easyword.dao.model.NewsWithBLOBs" extends="BaseResultMap">
+        <result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR"/>
+        <result column="english_text" property="englishText" jdbcType="LONGVARCHAR"/>
+        <result column="translation_text" property="translationText" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, title_en, title_cn, summary, cover_pic, word_num, source, voice, views, point, 
+    experience, gmt_create, gmt_modified
+  </sql>
+    <sql id="Blob_Column_List">
+    html_content, english_text, translation_text
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from news
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from news
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.nchu.easyword.dao.model.NewsWithBLOBs">
+    insert into news (id, title_en, title_cn, 
+      summary, cover_pic, word_num, 
+      source, voice, views, 
+      point, experience, gmt_create, 
+      gmt_modified, html_content, english_text, 
+      translation_text)
+    values (#{id,jdbcType=BIGINT}, #{titleEn,jdbcType=VARCHAR}, #{titleCn,jdbcType=VARCHAR}, 
+      #{summary,jdbcType=VARCHAR}, #{coverPic,jdbcType=VARCHAR}, #{wordNum,jdbcType=INTEGER}, 
+      #{source,jdbcType=VARCHAR}, #{voice,jdbcType=VARCHAR}, #{views,jdbcType=BIGINT}, 
+      #{point,jdbcType=INTEGER}, #{experience,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{htmlContent,jdbcType=LONGVARCHAR}, #{englishText,jdbcType=LONGVARCHAR}, 
+      #{translationText,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.NewsWithBLOBs">
+        insert into news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="titleEn != null">
+                title_en,
+            </if>
+            <if test="titleCn != null">
+                title_cn,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="coverPic != null">
+                cover_pic,
+            </if>
+            <if test="wordNum != null">
+                word_num,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="voice != null">
+                voice,
+            </if>
+            <if test="views != null">
+                views,
+            </if>
+            <if test="point != null">
+                point,
+            </if>
+            <if test="experience != null">
+                experience,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="htmlContent != null">
+                html_content,
+            </if>
+            <if test="englishText != null">
+                english_text,
+            </if>
+            <if test="translationText != null">
+                translation_text,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="titleEn != null">
+                #{titleEn,jdbcType=VARCHAR},
+            </if>
+            <if test="titleCn != null">
+                #{titleCn,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="coverPic != null">
+                #{coverPic,jdbcType=VARCHAR},
+            </if>
+            <if test="wordNum != null">
+                #{wordNum,jdbcType=INTEGER},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="voice != null">
+                #{voice,jdbcType=VARCHAR},
+            </if>
+            <if test="views != null">
+                #{views,jdbcType=BIGINT},
+            </if>
+            <if test="point != null">
+                #{point,jdbcType=INTEGER},
+            </if>
+            <if test="experience != null">
+                #{experience,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="htmlContent != null">
+                #{htmlContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="englishText != null">
+                #{englishText,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="translationText != null">
+                #{translationText,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.NewsWithBLOBs">
+        update news
+        <set>
+            <if test="titleEn != null">
+                title_en = #{titleEn,jdbcType=VARCHAR},
+            </if>
+            <if test="titleCn != null">
+                title_cn = #{titleCn,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="coverPic != null">
+                cover_pic = #{coverPic,jdbcType=VARCHAR},
+            </if>
+            <if test="wordNum != null">
+                word_num = #{wordNum,jdbcType=INTEGER},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="voice != null">
+                voice = #{voice,jdbcType=VARCHAR},
+            </if>
+            <if test="views != null">
+                views = #{views,jdbcType=BIGINT},
+            </if>
+            <if test="point != null">
+                point = #{point,jdbcType=INTEGER},
+            </if>
+            <if test="experience != null">
+                experience = #{experience,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="htmlContent != null">
+                html_content = #{htmlContent,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="englishText != null">
+                english_text = #{englishText,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="translationText != null">
+                translation_text = #{translationText,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nchu.easyword.dao.model.NewsWithBLOBs">
+    update news
+    set title_en = #{titleEn,jdbcType=VARCHAR},
+      title_cn = #{titleCn,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      cover_pic = #{coverPic,jdbcType=VARCHAR},
+      word_num = #{wordNum,jdbcType=INTEGER},
+      source = #{source,jdbcType=VARCHAR},
+      voice = #{voice,jdbcType=VARCHAR},
+      views = #{views,jdbcType=BIGINT},
+      point = #{point,jdbcType=INTEGER},
+      experience = #{experience,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      html_content = #{htmlContent,jdbcType=LONGVARCHAR},
+      english_text = #{englishText,jdbcType=LONGVARCHAR},
+      translation_text = #{translationText,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.News">
+    update news
+    set title_en = #{titleEn,jdbcType=VARCHAR},
+      title_cn = #{titleCn,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      cover_pic = #{coverPic,jdbcType=VARCHAR},
+      word_num = #{wordNum,jdbcType=INTEGER},
+      source = #{source,jdbcType=VARCHAR},
+      voice = #{voice,jdbcType=VARCHAR},
+      views = #{views,jdbcType=BIGINT},
+      point = #{point,jdbcType=INTEGER},
+      experience = #{experience,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!--分页获取新闻列表(不含新闻内容)-->
+    <select id="getNewsByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM news
+        ORDER BY #{order} DESC
+        limit #{page},#{pageSize}
+    </select>
+
+    <!--统计新闻条数-->
+    <select id="getNewsCount" resultType="java.lang.Long">
+        SELECT count(id)
+        FROM news
+    </select>
+    <!--清空全部新闻,不加where条件时相当于一条条删除表记录-->
+    <delete id="clearAll">
+        DELETE FROM news;
+    </delete>
+</mapper>

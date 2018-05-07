@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.ResourceFileMapper" >
+  <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.ResourceFile" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="fileName" property="filename" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="pointsRequired" property="pointsrequired" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="down_count" property="downCount" jdbcType="BIGINT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fileName, description, pointsRequired, url, down_count, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from resourcefile
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from resourcefile
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.nchu.easyword.dao.model.ResourceFile" >
+    insert into resourcefile (id, fileName, description, 
+      pointsRequired, url, down_count, 
+      gmt_create, gmt_modified)
+    values (#{id,jdbcType=BIGINT}, #{filename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{pointsrequired,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{downCount,jdbcType=BIGINT}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.ResourceFile" >
+    insert into resourcefile
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="filename != null" >
+        fileName,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="pointsrequired != null" >
+        pointsRequired,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="downCount != null" >
+        down_count,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="pointsrequired != null" >
+        #{pointsrequired,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="downCount != null" >
+        #{downCount,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.ResourceFile" >
+    update resourcefile
+    <set >
+      <if test="filename != null" >
+        fileName = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="pointsrequired != null" >
+        pointsRequired = #{pointsrequired,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="downCount != null" >
+        down_count = #{downCount,jdbcType=BIGINT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.ResourceFile" >
+    update resourcefile
+    set fileName = #{filename,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      pointsRequired = #{pointsrequired,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      down_count = #{downCount,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!--分页查询-->
+    <select id="getFileListByPage" resultMap="BaseResultMap">
+        SELECT  id, fileName, description, pointsRequired, down_count, gmt_create, gmt_modified
+        FROM resourcefile
+        limit #{start},#{limit}
+    </select>
+    <!--获取文件总数-->
+    <select id="totalFileNum" resultType="java.lang.Long">
+        SELECT count(*) FROM resourcefile
+    </select>
+</mapper>

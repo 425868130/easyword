@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.MeansViewMapper">
+    <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.MeansView">
+        <result column="wordID" property="wordid" jdbcType="BIGINT"/>
+        <result column="means" property="means" jdbcType="VARCHAR"/>
+        <result column="proName" property="proname" jdbcType="VARCHAR"/>
+        <result column="proMeans" property="promeans" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.nchu.easyword.dao.model.MeansView">
+    insert into meansview (wordID, means, proName, 
+      proMeans)
+    values (#{wordid,jdbcType=BIGINT}, #{means,jdbcType=VARCHAR}, #{proname,jdbcType=VARCHAR}, 
+      #{promeans,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.MeansView">
+        insert into meansview
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="wordid != null">
+                wordID,
+            </if>
+            <if test="means != null">
+                means,
+            </if>
+            <if test="proname != null">
+                proName,
+            </if>
+            <if test="promeans != null">
+                proMeans,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="wordid != null">
+                #{wordid,jdbcType=BIGINT},
+            </if>
+            <if test="means != null">
+                #{means,jdbcType=VARCHAR},
+            </if>
+            <if test="proname != null">
+                #{proname,jdbcType=VARCHAR},
+            </if>
+            <if test="promeans != null">
+                #{promeans,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!---->
+    <select id="getRandomMean">
+        SELECT * FROM
+        words AS t1
+    JOIN (
+        SELECT
+            ROUND(
+                RAND() * (
+                    (SELECT MAX(id) FROM words) - (SELECT MIN(id) FROM words)
+                ) + (SELECT MIN(id) FROM words)
+            ) AS id
+    ) AS t2
+    WHERE
+        t1.id >= t2.id
+    ORDER BY
+        t1.id
+    LIMIT 1;
+    </select>
+</mapper>

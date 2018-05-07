@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.PersonalGlossaryMapper">
+    <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.PersonalGlossary">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_Id" property="userId" jdbcType="BIGINT"/>
+        <result column="word_Id" property="wordId" jdbcType="BIGINT"/>
+        <result column="word" property="word" jdbcType="VARCHAR"/>
+        <result column="isRemembered" property="isremembered" jdbcType="BIT"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_Id, word_Id, word, isRemembered, gmt_create, gmt_modified
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from personalglossary
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from personalglossary
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.nchu.easyword.dao.model.PersonalGlossary">
+    insert into personalglossary (id, user_Id, word_Id, 
+      word, isRemembered, gmt_create, 
+      gmt_modified)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{wordId,jdbcType=BIGINT}, 
+      #{word,jdbcType=VARCHAR}, #{isremembered,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.PersonalGlossary">
+        insert into personalglossary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_Id,
+            </if>
+            <if test="wordId != null">
+                word_Id,
+            </if>
+            <if test="word != null">
+                word,
+            </if>
+            <if test="isremembered != null">
+                isRemembered,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="wordId != null">
+                #{wordId,jdbcType=BIGINT},
+            </if>
+            <if test="word != null">
+                #{word,jdbcType=VARCHAR},
+            </if>
+            <if test="isremembered != null">
+                #{isremembered,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.PersonalGlossary">
+        update personalglossary
+        <set>
+            <if test="userId != null">
+                user_Id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="wordId != null">
+                word_Id = #{wordId,jdbcType=BIGINT},
+            </if>
+            <if test="word != null">
+                word = #{word,jdbcType=VARCHAR},
+            </if>
+            <if test="isremembered != null">
+                isRemembered = #{isremembered,jdbcType=BIT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.PersonalGlossary">
+    update personalglossary
+    set user_Id = #{userId,jdbcType=BIGINT},
+      word_Id = #{wordId,jdbcType=BIGINT},
+      word = #{word,jdbcType=VARCHAR},
+      isRemembered = #{isremembered,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!--add-->
+    <!--从单词本中移除单词-->
+    <delete id="removeWord" parameterType="java.lang.Long">
+        delete from personalglossary
+        where word_Id = #{word_id,jdbcType=BIGINT} AND user_Id = #{userId,jdbcType=BIGINT}
+    </delete>
+    <!--分页查询-->
+    <select id="getGlossaryByPage" resultMap="BaseResultMap">
+        SELECT * FROM personalglossary
+        WHERE user_Id = #{userId} AND isRemembered =#{isRemember}
+        ORDER BY gmt_create DESC limit #{start},#{limit}
+    </select>
+    <!--获取指定用户总生词记录数-->
+    <select id="countWordByUser" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM personalglossary
+        WHERE user_Id = #{userId} AND isRemembered =#{isRemember}
+    </select>
+    <!--通过wordID和userID获取生词记录-->
+    <select id="selectByWordID" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from personalglossary
+        where word_Id = #{wordID,jdbcType=BIGINT} AND user_Id = #{userId,jdbcType=BIGINT}
+    </select>
+    <!--获取用户最近添加的前10个单词-->
+    <select id="recentGlossary" resultMap="BaseResultMap">
+        SELECT * FROM personalglossary
+        WHERE user_Id = #{userId}
+        ORDER BY gmt_create DESC limit 10
+    </select>
+</mapper>

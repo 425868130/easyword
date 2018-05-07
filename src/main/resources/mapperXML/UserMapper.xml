@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.UserMapper" >
+  <!--基础字段映射-->
+  <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="nickName" property="nickname" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="BIT" />
+    <result column="headportrait" property="headportrait" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="phoneNumber" property="phonenumber" jdbcType="CHAR" />
+    <result column="points" property="points" jdbcType="INTEGER" />
+    <result column="exp_value" property="expValue" jdbcType="BIGINT" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+    <result column="checkcode" property="checkcode" jdbcType="VARCHAR" />
+    <result column="isVerification" property="isverification" jdbcType="BIT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account, password, nickName, sex, headportrait, signature, email, phoneNumber,
+    points, exp_value, rank, checkcode, isVerification, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.nchu.easyword.dao.model.User" >
+    insert into user (id, account, password,
+    nickName, sex, headportrait,
+    signature, email, phoneNumber,
+    points, exp_value, rank,
+    checkcode, isVerification, gmt_create,
+    gmt_modified)
+    values (#{id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{nickname,jdbcType=VARCHAR}, #{sex,jdbcType=BIT}, #{headportrait,jdbcType=VARCHAR},
+    #{signature,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phonenumber,jdbcType=CHAR},
+    #{points,jdbcType=INTEGER}, #{expValue,jdbcType=BIGINT}, #{rank,jdbcType=INTEGER},
+    #{checkcode,jdbcType=VARCHAR}, #{isverification,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP},
+    #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="nickname != null" >
+        nickName,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="headportrait != null" >
+        headportrait,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phonenumber != null" >
+        phoneNumber,
+      </if>
+      <if test="points != null" >
+        points,
+      </if>
+      <if test="expValue != null" >
+        exp_value,
+      </if>
+      <if test="rank != null" >
+        rank,
+      </if>
+      <if test="checkcode != null" >
+        checkcode,
+      </if>
+      <if test="isverification != null" >
+        isVerification,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=BIT},
+      </if>
+      <if test="headportrait != null" >
+        #{headportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        #{phonenumber,jdbcType=CHAR},
+      </if>
+      <if test="points != null" >
+        #{points,jdbcType=INTEGER},
+      </if>
+      <if test="expValue != null" >
+        #{expValue,jdbcType=BIGINT},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="checkcode != null" >
+        #{checkcode,jdbcType=VARCHAR},
+      </if>
+      <if test="isverification != null" >
+        #{isverification,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.User" >
+    update user
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickName = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=BIT},
+      </if>
+      <if test="headportrait != null" >
+        headportrait = #{headportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phonenumber != null" >
+        phoneNumber = #{phonenumber,jdbcType=CHAR},
+      </if>
+      <if test="points != null" >
+        points = #{points,jdbcType=INTEGER},
+      </if>
+      <if test="expValue != null" >
+        exp_value = #{expValue,jdbcType=BIGINT},
+      </if>
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="checkcode != null" >
+        checkcode = #{checkcode,jdbcType=VARCHAR},
+      </if>
+      <if test="isverification != null" >
+        isVerification = #{isverification,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.User" >
+    update user
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      nickName = #{nickname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=BIT},
+      headportrait = #{headportrait,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phoneNumber = #{phonenumber,jdbcType=CHAR},
+      points = #{points,jdbcType=INTEGER},
+      exp_value = #{expValue,jdbcType=BIGINT},
+      rank = #{rank,jdbcType=INTEGER},
+      checkcode = #{checkcode,jdbcType=VARCHAR},
+      isVerification = #{isverification,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!--通过账号查询用户-->
+    <select id="selectByAccount" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where account = #{account}
+    </select>
+
+    <!--用户登录校验-->
+    <select id="loginCheck" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM user
+        WHERE account = #{account} AND password =#{password}
+    </select>
+</mapper>

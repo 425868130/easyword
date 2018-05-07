@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.UserSentenceMapper" >
+  <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.UserSentence" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="word_id" property="wordId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_nick" property="userNick" jdbcType="VARCHAR" />
+    <result column="user_headportrait" property="userHeadportrait" jdbcType="VARCHAR" />
+    <result column="origin_sentence" property="originSentence" jdbcType="VARCHAR" />
+    <result column="voice" property="voice" jdbcType="VARCHAR" />
+    <result column="first" property="first" jdbcType="VARCHAR" />
+    <result column="mid" property="mid" jdbcType="VARCHAR" />
+    <result column="last" property="last" jdbcType="VARCHAR" />
+    <result column="translation" property="translation" jdbcType="VARCHAR" />
+    <result column="like_num" property="likeNum" jdbcType="BIGINT" />
+    <result column="is_checked" property="isChecked" jdbcType="BIT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, word_id, user_id, user_nick, user_headportrait, origin_sentence, voice, first, 
+    mid, last, translation, like_num, is_checked, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_sentence
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_sentence
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.nchu.easyword.dao.model.UserSentence" >
+    insert into user_sentence (id, word_id, user_id, 
+      user_nick, user_headportrait, origin_sentence, 
+      voice, first, mid, 
+      last, translation, like_num, 
+      is_checked, gmt_create, gmt_modified
+      )
+    values (#{id,jdbcType=BIGINT}, #{wordId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{userNick,jdbcType=VARCHAR}, #{userHeadportrait,jdbcType=VARCHAR}, #{originSentence,jdbcType=VARCHAR}, 
+      #{voice,jdbcType=VARCHAR}, #{first,jdbcType=VARCHAR}, #{mid,jdbcType=VARCHAR}, 
+      #{last,jdbcType=VARCHAR}, #{translation,jdbcType=VARCHAR}, #{likeNum,jdbcType=BIGINT}, 
+      #{isChecked,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.UserSentence" >
+    insert into user_sentence
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wordId != null" >
+        word_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userNick != null" >
+        user_nick,
+      </if>
+      <if test="userHeadportrait != null" >
+        user_headportrait,
+      </if>
+      <if test="originSentence != null" >
+        origin_sentence,
+      </if>
+      <if test="voice != null" >
+        voice,
+      </if>
+      <if test="first != null" >
+        first,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="last != null" >
+        last,
+      </if>
+      <if test="translation != null" >
+        translation,
+      </if>
+      <if test="likeNum != null" >
+        like_num,
+      </if>
+      <if test="isChecked != null" >
+        is_checked,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="wordId != null" >
+        #{wordId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userNick != null" >
+        #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadportrait != null" >
+        #{userHeadportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="originSentence != null" >
+        #{originSentence,jdbcType=VARCHAR},
+      </if>
+      <if test="voice != null" >
+        #{voice,jdbcType=VARCHAR},
+      </if>
+      <if test="first != null" >
+        #{first,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="last != null" >
+        #{last,jdbcType=VARCHAR},
+      </if>
+      <if test="translation != null" >
+        #{translation,jdbcType=VARCHAR},
+      </if>
+      <if test="likeNum != null" >
+        #{likeNum,jdbcType=BIGINT},
+      </if>
+      <if test="isChecked != null" >
+        #{isChecked,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.UserSentence" >
+    update user_sentence
+    <set >
+      <if test="wordId != null" >
+        word_id = #{wordId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userNick != null" >
+        user_nick = #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="userHeadportrait != null" >
+        user_headportrait = #{userHeadportrait,jdbcType=VARCHAR},
+      </if>
+      <if test="originSentence != null" >
+        origin_sentence = #{originSentence,jdbcType=VARCHAR},
+      </if>
+      <if test="voice != null" >
+        voice = #{voice,jdbcType=VARCHAR},
+      </if>
+      <if test="first != null" >
+        first = #{first,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=VARCHAR},
+      </if>
+      <if test="last != null" >
+        last = #{last,jdbcType=VARCHAR},
+      </if>
+      <if test="translation != null" >
+        translation = #{translation,jdbcType=VARCHAR},
+      </if>
+      <if test="likeNum != null" >
+        like_num = #{likeNum,jdbcType=BIGINT},
+      </if>
+      <if test="isChecked != null" >
+        is_checked = #{isChecked,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.UserSentence" >
+    update user_sentence
+    set word_id = #{wordId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_nick = #{userNick,jdbcType=VARCHAR},
+      user_headportrait = #{userHeadportrait,jdbcType=VARCHAR},
+      origin_sentence = #{originSentence,jdbcType=VARCHAR},
+      voice = #{voice,jdbcType=VARCHAR},
+      first = #{first,jdbcType=VARCHAR},
+      mid = #{mid,jdbcType=VARCHAR},
+      last = #{last,jdbcType=VARCHAR},
+      translation = #{translation,jdbcType=VARCHAR},
+      like_num = #{likeNum,jdbcType=BIGINT},
+      is_checked = #{isChecked,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--通过单词获取用户自定义例句(按点赞数倒序)-->
+  <select id="getUserSentencesByWord" resultMap="BaseResultMap">
+    SELECT * FROM user_sentence
+    WHERE word_id=#{word_id} AND is_checked = #{isCheck}
+    ORDER BY like_num DESC
+    limit #{page},#{pageSize}
+  </select>
+
+  <!--分页总记录条数-->
+  <select id="SentencesByWordTotal" resultType="java.lang.Long">
+    SELECT count(id)
+    FROM user_sentence
+    WHERE word_id = #{word_id} AND is_checked = #{isCheck}
+  </select>
+  <!--获取用户是否点赞某条例句-->
+  <select id="userLikeRecord" resultType="java.lang.Integer">
+    SELECT count(id)
+    FROM like_sentence
+    WHERE user_id = #{userId} AND sentence_id =#{sentence_id}
+  </select>
+</mapper>

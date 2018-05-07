@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.PracticeTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.PracticeTask" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="word_num" property="wordNum" jdbcType="INTEGER" />
+    <result column="progress" property="progress" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.nchu.easyword.dao.model.PracticeTask" extends="BaseResultMap" >
+    <result column="word_list" property="wordList" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, word_num, progress, gmt_create, gmt_modified
+  </sql>
+  <sql id="Blob_Column_List" >
+    word_list
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from practicetask
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from practicetask
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.nchu.easyword.dao.model.PracticeTask" >
+    insert into practicetask (id, user_id, word_num, 
+      progress, gmt_create, gmt_modified, 
+      word_list)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{wordNum,jdbcType=INTEGER}, 
+      #{progress,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{wordList,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.PracticeTask" >
+    insert into practicetask
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="wordNum != null" >
+        word_num,
+      </if>
+      <if test="progress != null" >
+        progress,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="wordList != null" >
+        word_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="wordNum != null" >
+        #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="progress != null" >
+        #{progress,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wordList != null" >
+        #{wordList,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.PracticeTask" >
+    update practicetask
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="wordNum != null" >
+        word_num = #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="progress != null" >
+        progress = #{progress,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wordList != null" >
+        word_list = #{wordList,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nchu.easyword.dao.model.PracticeTask" >
+    update practicetask
+    set user_id = #{userId,jdbcType=BIGINT},
+      word_num = #{wordNum,jdbcType=INTEGER},
+      progress = #{progress,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      word_list = #{wordList,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.PracticeTask" >
+    update practicetask
+    set user_id = #{userId,jdbcType=BIGINT},
+      word_num = #{wordNum,jdbcType=INTEGER},
+      progress = #{progress,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.NotificationMapper" >
+  <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.Notification" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="receiveid" property="receiveid" jdbcType="BIGINT" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="isread" property="isread" jdbcType="BIT" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, receiveid, content, isread, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from notification
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from notification
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.nchu.easyword.dao.model.Notification" >
+    insert into notification (id, receiveid, content, 
+      isread, gmt_create, gmt_modified
+      )
+    values (#{id,jdbcType=BIGINT}, #{receiveid,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
+      #{isread,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.Notification" >
+    insert into notification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="receiveid != null" >
+        receiveid,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="isread != null" >
+        isread,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="receiveid != null" >
+        #{receiveid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isread != null" >
+        #{isread,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.Notification" >
+    update notification
+    <set >
+      <if test="receiveid != null" >
+        receiveid = #{receiveid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="isread != null" >
+        isread = #{isread,jdbcType=BIT},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.Notification" >
+    update notification
+    set receiveid = #{receiveid,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      isread = #{isread,jdbcType=BIT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--分页查询-->
+    <select id="getByPage" resultMap="BaseResultMap">
+        SELECT  *
+        FROM notification
+        WHERE receiveid = #{userId} ORDER BY gmt_create DESC
+        limit #{start},#{limit}
+    </select>
+    <!--获取消息总数-->
+    <select id="totalNum" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM notification
+        WHERE receiveid = #{userId}
+    </select>
+</mapper>

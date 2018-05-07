@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+        body{
+            background-color: #f8f8f9;
+        }
+        .logo{
+            width: 40px;
+            height: 40px;
+        }
+        .title{
+            font-size: 35px;
+            color: #495060;
+        }
+        .tipsImg{
+            float: right;
+            width:200px;
+            height:330px;
+            padding-bottom: 20px;
+        }
+        .active_link{
+            color:blue;
+            word-break:break-all;
+        }
+    </style>
+</head>
+<body>
+<img src="http://easywords.oss-cn-hangzhou.aliyuncs.com/emailTemplate/Email_pic.png" class="tipsImg">
+<span class="title">[<span th:text="${userAccount}" style="color: #2db7f5"></span>] 欢迎加入简词</span>
+<img src="http://easywords.oss-cn-hangzhou.aliyuncs.com/emailTemplate/logo.png" class="logo">
+<p>点击下面链接激活账号,24小时有效,链接只能使用一次，请尽快激活!</p><br>
+<a th:href="${href}" th:text="${href}" class="active_link"></a>
+<br>
+<p style="color:red;font-size: 13px">
+    请不要把邮件内容泄露给其他人!<br>
+    Tips:如果链接无法直接点击请复制到浏览器中地址栏中打开。</p>
+</body>
+</html>

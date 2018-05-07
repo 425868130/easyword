@@ -1,0 +1,50 @@
+# 2018-5-7 17:11:02
+# @author xujw
+# 本文件为项目配置的模板文件,请创建application.yml并复制本文件中的配置选项,然后按要求填写自己对应的配置信息,冒号后记得留空格
+spring:
+  datasource:
+  #数据库地址
+    url:
+    #用户名
+    username:
+    #密码
+    password:
+    #数据库驱动类名
+    driver-class-name: com.mysql.jdbc.Driver
+  mail:
+  #账号认证服务器地址,即项目的部署地址
+    validate_host:
+    #用于发送邮件的邮箱主机地址
+    host: smtp.xxxx.com
+    #邮箱用户名
+    username: xxx@xxx.com
+    #邮箱密码
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  servlet:
+    multipart:
+    #最大允许的文件上传大小
+      max-file-size: 100MB
+mybatis:
+  mapper-locations: classpath:mapperXML/*.xml
+
+  #阿里OSS访问配置
+ossClient:
+  endpoint: https://oss-cn-xxxx.aliyuncs.com
+  bucketName: xxxx
+  accessKeyId: xxxx
+  accessKeySecret: xxxxxx
+#指定端口号
+server:
+  port: 8088
+#爬虫最大连接数
+spiderMaxConnections: 20
+#后台线程池线程数
+maxBackThread: 50
+#每日新闻抓取定时任务表达式,必须符合spring的Cron表达式的格式要求,当前默认每天6点执行
+newsTaskTime: 0 0 6 * * *

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.DownloadRecordMapper">
+    <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.DownloadRecord">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="userId" property="userid" jdbcType="BIGINT"/>
+        <result column="fileId" property="fileid" jdbcType="BIGINT"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, userId, fileId, gmt_create
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from downloadrecord
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from downloadrecord
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.nchu.easyword.dao.model.DownloadRecord">
+    insert into downloadrecord (id, userId, fileId, 
+      gmt_create)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{fileid,jdbcType=BIGINT}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.DownloadRecord">
+        insert into downloadrecord
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userid != null">
+                userId,
+            </if>
+            <if test="fileid != null">
+                fileId,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=BIGINT},
+            </if>
+            <if test="fileid != null">
+                #{fileid,jdbcType=BIGINT},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.DownloadRecord">
+        update downloadrecord
+        <set>
+            <if test="userid != null">
+                userId = #{userid,jdbcType=BIGINT},
+            </if>
+            <if test="fileid != null">
+                fileId = #{fileid,jdbcType=BIGINT},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.DownloadRecord">
+    update downloadrecord
+    set userId = #{userid,jdbcType=BIGINT},
+      fileId = #{fileid,jdbcType=BIGINT},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!--获取指定用户的全部下载记录-->
+
+    <!--通过文件id和用户id获取下载记录-->
+    <select id="selectByUserAndFile" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from downloadrecord
+        where userId = #{userId,jdbcType=BIGINT} AND fileId = #{fileId,jdbcType=INTEGER}
+    </select>
+</mapper>

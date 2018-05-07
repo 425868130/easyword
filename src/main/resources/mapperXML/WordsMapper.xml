@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.WordsMapper">
+    <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.Words">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="word" property="word" jdbcType="VARCHAR"/>
+        <result column="exchange" property="exchange" jdbcType="VARCHAR"/>
+        <result column="voice" property="voice" jdbcType="VARCHAR"/>
+        <result column="times" property="times" jdbcType="INTEGER"/>
+        <!--一个单词可有多条释义-->
+        <collection property="meansList" ofType="com.nchu.easyword.dao.model.MeansView">
+            <result property="wordid" column="wordID"/>
+            <result property="means" column="means"/>
+            <result property="proName" column="proName"/>
+            <result property="proMeans" column="proMeans"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, word, exchange, voice, times
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from words
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from words
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.nchu.easyword.dao.model.Words">
+        insert into words (id, word, exchange,
+        voice, times)
+        values (#{id,jdbcType=BIGINT}, #{word,jdbcType=VARCHAR}, #{exchange,jdbcType=VARCHAR},
+        #{voice,jdbcType=VARCHAR}, #{times,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.Words">
+        insert into words
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="word != null">
+                word,
+            </if>
+            <if test="exchange != null">
+                exchange,
+            </if>
+            <if test="voice != null">
+                voice,
+            </if>
+            <if test="times != null">
+                times,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="word != null">
+                #{word,jdbcType=VARCHAR},
+            </if>
+            <if test="exchange != null">
+                #{exchange,jdbcType=VARCHAR},
+            </if>
+            <if test="voice != null">
+                #{voice,jdbcType=VARCHAR},
+            </if>
+            <if test="times != null">
+                #{times,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.Words">
+        update words
+        <set>
+            <if test="word != null">
+                word = #{word,jdbcType=VARCHAR},
+            </if>
+            <if test="exchange != null">
+                exchange = #{exchange,jdbcType=VARCHAR},
+            </if>
+            <if test="voice != null">
+                voice = #{voice,jdbcType=VARCHAR},
+            </if>
+            <if test="times != null">
+                times = #{times,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.Words">
+        update words
+        set word = #{word,jdbcType=VARCHAR},
+        exchange = #{exchange,jdbcType=VARCHAR},
+        voice = #{voice,jdbcType=VARCHAR},
+        times = #{times,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!--通过关键词精确查找单词,返回完整词条定义-->
+    <select id="searchByKeywords" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT * FROM words w RIGHT OUTER JOIN meansview m ON w.id = m.wordID
+        WHERE w.word = #{keywords}
+    </select>
+    <!--通过id获取单词对象包括中文解释-->
+    <select id="getWordWithMeanById" resultMap="BaseResultMap">
+        SELECT * FROM words w RIGHT OUTER JOIN meansview m ON w.id = m.wordID
+        WHERE w.id = #{wordID}
+    </select>
+    <!--随机选50个单词作为今日任务-->
+    <select id="getDailyTask" resultMap="BaseResultMap">
+        SELECT * FROM words order by rand() limit 50
+    </select>
+    <!--随机获取单词记录,这里必须关闭查询缓存，否则多次查询将返回相同值,flushCache="true"-->
+    <select id="getRandomWord" resultMap="BaseResultMap" flushCache="true">
+        SELECT t1.id,t1.word,m.means,m.proName,m.proMeans
+        FROM
+        words AS t1
+        RIGHT OUTER JOIN meansview m ON t1.id = m.wordID
+        JOIN (
+        SELECT
+        ROUND(
+        RAND() * (
+        (SELECT MAX(id) FROM words) - (SELECT MIN(id) FROM words)
+        ) + (SELECT MIN(id) FROM words)
+        ) AS id
+        ) AS t2
+        WHERE
+        t1.id >= t2.id AND t1.id!=#{excludeID,jdbcType=BIGINT}
+        ORDER BY
+        t1.id
+        LIMIT 1;
+    </select>
+</mapper>
