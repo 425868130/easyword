@@ -12,6 +12,7 @@ import com.nchu.easyword.service.inface.TaskService;
 import com.nchu.easyword.utils.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -70,6 +71,7 @@ public class TaskServiceImpl implements TaskService {
         /*任务进度归零*/
         oldTask.setReviewProgress(0);
         oldTask.setTodayProgress(0);
+        oldTask.setPracticeProgress(0);
         /*设置修改时间*/
         oldTask.setGmtModified(DateUtil.getCurrentTimestamp());
         oldTask.setWordList(JSON.toJSONString(WordTaskJsonObj.transFromWords(words)));
@@ -85,8 +87,10 @@ public class TaskServiceImpl implements TaskService {
      * @param dailyTask 新的任务信息(userId字段禁止修改)
      * @return 操作结果
      */
+    @Transactional
     @Override
     public boolean updateTaskProgress(DailyTask dailyTask) {
+        dailyTask.setGmtModified(DateUtil.getCurrentTimestamp());
         if (dailyTaskMapper.updateByPrimaryKeySelective(dailyTask) == 1) {
             return true;
         }

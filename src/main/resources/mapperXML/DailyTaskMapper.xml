@@ -1,160 +1,175 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.nchu.easyword.dao.mapperInterface.DailyTaskMapper">
-    <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.DailyTask">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="user_id" property="userId" jdbcType="BIGINT"/>
-        <result column="word_num" property="wordNum" jdbcType="INTEGER"/>
-        <result column="today_progress" property="todayProgress" jdbcType="INTEGER"/>
-        <result column="review_progress" property="reviewProgress" jdbcType="INTEGER"/>
-        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
-        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
-    </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="com.nchu.easyword.dao.model.DailyTask" extends="BaseResultMap">
-        <result column="word_list" property="wordList" jdbcType="LONGVARCHAR"/>
-    </resultMap>
-    <sql id="Base_Column_List">
-    id, user_id, word_num, today_progress, review_progress, gmt_create, gmt_modified
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.DailyTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.DailyTask" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="word_num" property="wordNum" jdbcType="INTEGER" />
+    <result column="today_progress" property="todayProgress" jdbcType="INTEGER" />
+    <result column="practice_progress" property="practiceProgress" jdbcType="INTEGER" />
+    <result column="review_progress" property="reviewProgress" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.nchu.easyword.dao.model.DailyTask" extends="BaseResultMap" >
+    <result column="word_list" property="wordList" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, word_num, today_progress, practice_progress, review_progress, gmt_create,
+    gmt_modified
   </sql>
-    <sql id="Blob_Column_List">
+  <sql id="Blob_Column_List" >
     word_list
   </sql>
-    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from dailytask
-        where id = #{id,jdbcType=BIGINT}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dailytask
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from dailytask
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="com.nchu.easyword.dao.model.DailyTask">
-    insert into dailytask (id, user_id, word_num, 
-      today_progress, review_progress, gmt_create, 
-      gmt_modified, word_list)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{wordNum,jdbcType=INTEGER}, 
-      #{todayProgress,jdbcType=INTEGER}, #{reviewProgress,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{gmtModified,jdbcType=TIMESTAMP}, #{wordList,jdbcType=LONGVARCHAR})
+  <insert id="insert" parameterType="com.nchu.easyword.dao.model.DailyTask" >
+    insert into dailytask (id, user_id, word_num,
+      today_progress, practice_progress, review_progress,
+      gmt_create, gmt_modified, word_list
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{wordNum,jdbcType=INTEGER},
+      #{todayProgress,jdbcType=INTEGER}, #{practiceProgress,jdbcType=INTEGER}, #{reviewProgress,jdbcType=INTEGER},
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{wordList,jdbcType=LONGVARCHAR}
+      )
   </insert>
-    <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.DailyTask">
-        insert into dailytask
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="userId != null">
-                user_id,
-            </if>
-            <if test="wordNum != null">
-                word_num,
-            </if>
-            <if test="todayProgress != null">
-                today_progress,
-            </if>
-            <if test="reviewProgress != null">
-                review_progress,
-            </if>
-            <if test="gmtCreate != null">
-                gmt_create,
-            </if>
-            <if test="gmtModified != null">
-                gmt_modified,
-            </if>
-            <if test="wordList != null">
-                word_list,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="userId != null">
-                #{userId,jdbcType=BIGINT},
-            </if>
-            <if test="wordNum != null">
-                #{wordNum,jdbcType=INTEGER},
-            </if>
-            <if test="todayProgress != null">
-                #{todayProgress,jdbcType=INTEGER},
-            </if>
-            <if test="reviewProgress != null">
-                #{reviewProgress,jdbcType=INTEGER},
-            </if>
-            <if test="gmtCreate != null">
-                #{gmtCreate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="gmtModified != null">
-                #{gmtModified,jdbcType=TIMESTAMP},
-            </if>
-            <if test="wordList != null">
-                #{wordList,jdbcType=LONGVARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.DailyTask">
-        update dailytask
-        <set>
-            <if test="userId != null">
-                user_id = #{userId,jdbcType=BIGINT},
-            </if>
-            <if test="wordNum != null">
-                word_num = #{wordNum,jdbcType=INTEGER},
-            </if>
-            <if test="todayProgress != null">
-                today_progress = #{todayProgress,jdbcType=INTEGER},
-            </if>
-            <if test="reviewProgress != null">
-                review_progress = #{reviewProgress,jdbcType=INTEGER},
-            </if>
-            <if test="gmtCreate != null">
-                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="gmtModified != null">
-                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-            </if>
-            <if test="wordList != null">
-                word_list = #{wordList,jdbcType=LONGVARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nchu.easyword.dao.model.DailyTask">
+  <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.DailyTask" >
+    insert into dailytask
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="wordNum != null" >
+        word_num,
+      </if>
+      <if test="todayProgress != null" >
+        today_progress,
+      </if>
+      <if test="practiceProgress != null" >
+        practice_progress,
+      </if>
+      <if test="reviewProgress != null" >
+        review_progress,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="wordList != null" >
+        word_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="wordNum != null" >
+        #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="todayProgress != null" >
+        #{todayProgress,jdbcType=INTEGER},
+      </if>
+      <if test="practiceProgress != null" >
+        #{practiceProgress,jdbcType=INTEGER},
+      </if>
+      <if test="reviewProgress != null" >
+        #{reviewProgress,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wordList != null" >
+        #{wordList,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.DailyTask" >
+    update dailytask
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="wordNum != null" >
+        word_num = #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="todayProgress != null" >
+        today_progress = #{todayProgress,jdbcType=INTEGER},
+      </if>
+      <if test="practiceProgress != null" >
+        practice_progress = #{practiceProgress,jdbcType=INTEGER},
+      </if>
+      <if test="reviewProgress != null" >
+        review_progress = #{reviewProgress,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wordList != null" >
+        word_list = #{wordList,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nchu.easyword.dao.model.DailyTask" >
     update dailytask
     set user_id = #{userId,jdbcType=BIGINT},
       word_num = #{wordNum,jdbcType=INTEGER},
       today_progress = #{todayProgress,jdbcType=INTEGER},
+      practice_progress = #{practiceProgress,jdbcType=INTEGER},
       review_progress = #{reviewProgress,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       word_list = #{wordList,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-    <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.DailyTask">
+  <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.DailyTask" >
     update dailytask
     set user_id = #{userId,jdbcType=BIGINT},
       word_num = #{wordNum,jdbcType=INTEGER},
       today_progress = #{todayProgress,jdbcType=INTEGER},
+      practice_progress = #{practiceProgress,jdbcType=INTEGER},
       review_progress = #{reviewProgress,jdbcType=INTEGER},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-    <!--获取指定用户的指定时间段的任务信息-->
-    <select id="getUserTask" resultMap="ResultMapWithBLOBs">
-        SELECT *
-        FROM dailytask
-        WHERE user_id = #{userId,jdbcType=BIGINT} AND TO_DAYS(gmt_create) = TO_DAYS(#{time,jdbcType=TIMESTAMP} )
-    </select>
-    <!--获取复习任务，即昨天的任务记录-->
-    <select id="getReviewTask" resultMap="ResultMapWithBLOBs">
-        SELECT
-        *
-        FROM
-        dailytask
-        WHERE
-        TO_DAYS(NOW()) - TO_DAYS(gmt_create) = 1 AND user_id = #{userId,jdbcType=BIGINT}
-    </select>
+  <!--获取指定用户的指定时间段的任务信息-->
+  <select id="getUserTask" resultMap="ResultMapWithBLOBs">
+    SELECT *
+    FROM dailytask
+    WHERE user_id = #{userId,jdbcType=BIGINT} AND TO_DAYS(gmt_create) = TO_DAYS(#{time,jdbcType=TIMESTAMP} )
+  </select>
+  <!--获取复习任务，即昨天的任务记录-->
+  <select id="getReviewTask" resultMap="ResultMapWithBLOBs">
+    SELECT
+    *
+    FROM
+    dailytask
+    WHERE
+    TO_DAYS(NOW()) - TO_DAYS(gmt_create) = 1 AND user_id = #{userId,jdbcType=BIGINT}
+  </select>
 </mapper>

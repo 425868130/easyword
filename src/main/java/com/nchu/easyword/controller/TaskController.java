@@ -89,6 +89,33 @@ public class TaskController {
     }
 
     /**
+     *更新练习任务进度信息
+     * @param dailyTask 新任务信息
+     * @param responseDTO 统一响应对象
+     * @param request http请求
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "/updatePracticeTask", method = RequestMethod.POST)
+    public ResponseDTO updatePracticeTaskProgress(@RequestBody DailyTask dailyTask,
+                                          @RequestAttribute("responseDTO") ResponseDTO responseDTO, HttpServletRequest request) throws ServiceException {
+        User user = sessionService.getUser(request);
+        /*检测当前用户与任务所属用户是否相同*/
+        if (user != null && user.getId() != dailyTask.getUserId()) {
+            throw new ServiceException(StatusCode.REQUEST_FAILED, "非法操作!");
+        }
+        /*如果还没有完成全部练习任务则直接更新任务信息*/
+        if(dailyTask.getPracticeProgress() == dailyTask.getWordNum()){
+            /*如果已经完成则创建提示消息和增加用户积分*/
+            user.setPoints(user.getPoints() + 400);
+            userService.updateUserInfo(user);
+            responseDTO.setUserUpdate(true);
+            notificationService.newNotification(NotificationServiceImpl.genSimpleNotification(user.getId(), "完成练习任务获得积分 400 点,请继续坚持哦!"));
+        }
+        responseDTO.setData(taskService.updateTaskProgress(dailyTask)).setMessage("更新任务进度");
+        return responseDTO;
+    }
+    /**
      * 更新复习任务进度信息
      *
      * @param dailyTask   新任务信息

@@ -1,0 +1,59 @@
+{
+    "msg": "SUCCESS",
+    "status_code": 0,
+    "data": {
+        "pronunciations": {
+            "uk": "teɪk",
+            "us": "teɪk"
+        },
+        "en_definitions": {
+            "v": [
+                "carry out",
+                "require (time or space)",
+                "take somebody somewhere"
+            ],
+            "n": [
+                "the income or profit arising from such transactions as the sale of land or other property",
+                "the act of photographing a scene or part of a scene without interruption"
+            ]
+        },
+        "audio_addresses": {
+            "uk": [
+                "https://media-audio1.baydn.com/uk%2Ft%2Fta%2Ftake_v3.mp3",
+                "http://media-audio1.qiniu.baydn.com/uk/t/ta/take_v3.mp3"
+            ],
+            "us": [
+                "https://media-audio1.baydn.com/us%2Ft%2Fta%2Ftake_v3.mp3",
+                "http://media-audio1.qiniu.baydn.com/us/t/ta/take_v3.mp3"
+            ]
+        },
+        "uk_audio": "http://media.shanbay.com/audio/uk/take.mp3",
+        "conent_id": 5933,
+        "audio_name": "take_v3",
+        "cn_definition": {
+            "pos": "",
+            "defn": "vt.拿，取； 采取； 接受（礼物等）； 耗费（时间等）\nvi.拿； 获得\nn.镜头； 看法； 收入额； 场景"
+        },
+        "num_sense": 1,
+        "content_id": 5933,
+        "content_type": "vocabulary",
+        "sense_id": 0,
+        "id": 5933,
+        "definition": " vt.拿，取； 采取； 接受（礼物等）； 耗费（时间等）\nvi.拿； 获得\nn.镜头； 看法； 收入额； 场景",
+        "has_collins_defn": true,
+        "has_oxford_defn": true,
+        "url": "https://www.shanbay.com/bdc/mobile/preview/word?word=take",
+        "has_audio": true,
+        "en_definition": {
+            "pos": "v",
+            "defn": "carry out; require (time or space); take somebody somewhere"
+        },
+        "object_id": 5933,
+        "content": "take",
+        "pron": "teɪk",
+        "pronunciation": "teɪk",
+        "id_str": "jipvq",
+        "audio": "http://media.shanbay.com/audio/us/take.mp3",
+        "us_audio": "http://media.shanbay.com/audio/us/take.mp3"
+    }
+}

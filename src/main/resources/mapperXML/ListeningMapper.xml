@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nchu.easyword.dao.mapperInterface.ListeningMapper">
+    <resultMap id="BaseResultMap" type="com.nchu.easyword.dao.model.Listening">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="category" property="category" jdbcType="VARCHAR"/>
+        <result column="view_num" property="viewNum" jdbcType="INTEGER"/>
+        <result column="voice_url" property="voiceUrl" jdbcType="VARCHAR"/>
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP"/>
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.nchu.easyword.dao.model.Listening" extends="BaseResultMap">
+        <result column="original_text" property="originalText" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, title, category, view_num, voice_url, gmt_create, gmt_modified
+    </sql>
+    <sql id="Blob_Column_List">
+        original_text
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from listening
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM listening
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.nchu.easyword.dao.model.Listening">
+        INSERT INTO listening (id, title, category,
+                               view_num, voice_url, gmt_create,
+                               gmt_modified, original_text)
+        VALUES (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR},
+                #{viewNum,jdbcType=INTEGER}, #{voiceUrl,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+                #{gmtModified,jdbcType=TIMESTAMP}, #{originalText,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.nchu.easyword.dao.model.Listening">
+        insert into listening
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="viewNum != null">
+                view_num,
+            </if>
+            <if test="voiceUrl != null">
+                voice_url,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="originalText != null">
+                original_text,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="viewNum != null">
+                #{viewNum,jdbcType=INTEGER},
+            </if>
+            <if test="voiceUrl != null">
+                #{voiceUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="originalText != null">
+                #{originalText,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.nchu.easyword.dao.model.Listening">
+        update listening
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                category = #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="viewNum != null">
+                view_num = #{viewNum,jdbcType=INTEGER},
+            </if>
+            <if test="voiceUrl != null">
+                voice_url = #{voiceUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="originalText != null">
+                original_text = #{originalText,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nchu.easyword.dao.model.Listening">
+        UPDATE listening
+        SET title         = #{title,jdbcType=VARCHAR},
+            category      = #{category,jdbcType=VARCHAR},
+            view_num      = #{viewNum,jdbcType=INTEGER},
+            voice_url     = #{voiceUrl,jdbcType=VARCHAR},
+            gmt_create    = #{gmtCreate,jdbcType=TIMESTAMP},
+            gmt_modified  = #{gmtModified,jdbcType=TIMESTAMP},
+            original_text = #{originalText,jdbcType=LONGVARCHAR}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.nchu.easyword.dao.model.Listening">
+        UPDATE listening
+        SET title        = #{title,jdbcType=VARCHAR},
+            category     = #{category,jdbcType=VARCHAR},
+            view_num     = #{viewNum,jdbcType=INTEGER},
+            voice_url    = #{voiceUrl,jdbcType=VARCHAR},
+            gmt_create   = #{gmtCreate,jdbcType=TIMESTAMP},
+            gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+    <!--获取总记录数-->
+    <select id="getCount" resultType="java.lang.Long">
+        SELECT count(id)
+        FROM listening
+    </select>
+    <!--getByPage-->
+    <select id="getByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM listening
+        LIMIT #{page,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
+</mapper>

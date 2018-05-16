@@ -42,11 +42,16 @@
         </javaClientGenerator>
 
         <!-- 要对那些数据表进行生成操作，必须要有一个.其中tableName指定了数据库中的表名，domainObjectName指定生成的java类名 -->
-        <!--        <table schema="easyword" tableName="dailytask" domainObjectName="DailyTask"
-                       enableCountByExample="false" enableUpdateByExample="false"
-                       enableDeleteByExample="false" enableSelectByExample="false"
-                       selectByExampleQueryId="false">
-                </table>-->
+        <table schema="easyword" tableName="listening" domainObjectName="Listening"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+    <!--    <table schema="easyword" tableName="dailytask" domainObjectName="DailyTask"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>-->
         <!--        <table schema="easyword" tableName="downloadrecord" domainObjectName="DownloadRecord"
                        enableCountByExample="false" enableUpdateByExample="false"
                        enableDeleteByExample="false" enableSelectByExample="false"
@@ -57,16 +62,16 @@
                        enableDeleteByExample="false" enableSelectByExample="false"
                        selectByExampleQueryId="false">
                 </table>-->
-<!--        <table schema="easyword" tableName="news" domainObjectName="News"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>-->
-        <table schema="easyword" tableName="read_news" domainObjectName="ReadNews"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
+        <!--        <table schema="easyword" tableName="news" domainObjectName="News"
+                       enableCountByExample="false" enableUpdateByExample="false"
+                       enableDeleteByExample="false" enableSelectByExample="false"
+                       selectByExampleQueryId="false">
+                </table>-->
+        <!--        <table schema="easyword" tableName="read_news" domainObjectName="ReadNews"
+                       enableCountByExample="false" enableUpdateByExample="false"
+                       enableDeleteByExample="false" enableSelectByExample="false"
+                       selectByExampleQueryId="false">
+                </table>-->
         <!--        <table schema="easyword" tableName="user_sentence" domainObjectName="UserSentence"
                        enableCountByExample="false" enableUpdateByExample="false"
                        enableDeleteByExample="false" enableSelectByExample="false"

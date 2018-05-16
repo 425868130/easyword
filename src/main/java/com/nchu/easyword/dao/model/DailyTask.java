@@ -9,15 +9,17 @@ public class DailyTask {
 
     private Integer wordNum;
 
-    private String wordList;
-
     private Integer todayProgress;
+
+    private Integer practiceProgress;
 
     private Integer reviewProgress;
 
     private Date gmtCreate;
 
     private Date gmtModified;
+
+    private String wordList;
 
     public Long getId() {
         return id;
@@ -43,20 +45,20 @@ public class DailyTask {
         this.wordNum = wordNum;
     }
 
-    public String getWordList() {
-        return wordList;
-    }
-
-    public void setWordList(String wordList) {
-        this.wordList = wordList == null ? null : wordList.trim();
-    }
-
     public Integer getTodayProgress() {
         return todayProgress;
     }
 
     public void setTodayProgress(Integer todayProgress) {
         this.todayProgress = todayProgress;
+    }
+
+    public Integer getPracticeProgress() {
+        return practiceProgress;
+    }
+
+    public void setPracticeProgress(Integer practiceProgress) {
+        this.practiceProgress = practiceProgress;
     }
 
     public Integer getReviewProgress() {
@@ -81,5 +83,13 @@ public class DailyTask {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public String getWordList() {
+        return wordList;
+    }
+
+    public void setWordList(String wordList) {
+        this.wordList = wordList == null ? null : wordList.trim();
     }
 }
